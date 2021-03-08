@@ -1,77 +1,89 @@
-//Правило игры-У игроков есть всего одна кость.Они ходят последовательно, друг за другом. Игроки подсчитывают выпавшую очку,и очка добавляется за каждый разОни до 50и очков конкурируются друг с другом.Если кость упала строной единицы ,то того игрока сумма начнется с нуля.
-//переменное,для очереди игроков:пусть  Первый игрок -0, второй - 1
+
 var activePlayer = 0;
 
-//переменное,для сохранения общего счета игроков
-var scores =[0,0];
 
-//переменное,для сохранения счета одного раз игроков
-var roundScores =0;
-//переменное,для сохранения числа костя (случайные переменные 1-6)
-//<div class="player-score" id="score-0">27</div>
-var dice = Math.floor(Math.random()*6)+1;
-// window.document.querySelector('#score-0').textContent =dice;
-//document gedg ni windowooso(html) olj bnaa gesen vg
-//document.querySelector('#score-1').textContent =dice;
-//Готовим к началу игры
-document.querySelector('#score-0').textContent =0;
-document.querySelector('#score-1').textContent =0;
-document.querySelector('#current-0').textContent =0;
-document.querySelector('#current-1').textContent =0;
+var scores = [0, 0];
+
+
+var roundScore = 0;
+
+
+
+// ÐŸÑ€Ð¾Ð³Ñ€Ð°Ð¼ ÑÑ…Ð»ÑÑ…ÑÐ´ Ð±ÑÐ»Ñ‚Ð³ÑÐµ
+document.getElementById("score-0").textContent = "0";
+document.getElementById("score-1").textContent = "0";
+document.getElementById("current-0").textContent = "0";
+document.getElementById("current-1").textContent = "0";
 
 var diceDom = document.querySelector(".dice");
-diceDom.style.display="none";
-
-//shoog shideh event listener
-document.querySelector(".btn-roll").addEventListener("click",function shooShid(){
-    var diceNumber = Math.floor(Math.random()*6)+1;
-//shooni zurgiig web deer gargaj irne
-diceDom.style.display="block";
-//buusan sanmasargvi shooni tooni zurgiig web deer gargaj irne
-diceDom.src= "dice-"+diceNumber + ".png";
-
-/*toglogchiin eeljin onoog oorchilno
-buusan too ni 1ees yalgaatai bol idewhitei toglogchiin onoog nemegdvvlne*/
-if (diceNumber !== 1)
-{
-    // 1-ees oor too buula.Ter toog nemlee
-    roundScores = roundScores + diceNumber;
-    document.getElementById("current-"+activePlayer).textContent=roundScores;
-}
- else {
-     //1 buusan tul bvh onoog 0 bolgoloo-eelj soligdono
-     //ene toglogchiin eeljindee tsugluulsan onoog 0 bolgono
-     roundScores=0;
-     document.getElementById("current-"+activePlayer).textContent= 0;
-     //toglogchiin eeljiig nogoo toglogchruu shiljvvlne
-     //0 idewhitei toglogch rvv shiljine
-     activePlayer=== 0 ? (activePlayer =1) :( activePlayer = 0);
-    
-     //:-vgvi bol, bol ?
-
-     // ulaan tsegiig shiljvvleh
-     //class songohd zaawal tseg tawina 'player-0-panel'- ene bol class
-     document.querySelector('.player-0-panel').classList.toggle('active');
-     document.querySelector('.player-1-panel').classList.toggle('active');
-//toggle - esregrvv shiljvvlne utgig
-
-//shoog alga bolgoh toglogchiig solih ywtsad
-
-diceDom.style.display="block";
+diceDom.style.display = "none";
 
 
+document.querySelector(".btn-roll").addEventListener("click", function() {
+
+  var diceNumber = Math.floor(Math.random() * 6) + 1;
 
 
+  diceDom.style.display = "block";
 
 
-     /*
-     if(activePlayer ===0)
-     {
-         activePlayer=1;
-     }
-     else{
-         activePlayer=0;
-     }
- }*/
-}
+  diceDom.src = "dice-" + diceNumber + ".png";
+
+
+  if (diceNumber !== 1) {
+
+    roundScore = roundScore + diceNumber;
+    document.getElementById("current-" + activePlayer).textContent = roundScore;
+  } else {
+
+    switchToNextPlayer();
+  }
 });
+
+
+document.querySelector(".btn-hold").addEventListener("click", function() {
+  // Ð£Ð³ Ñ‚Ð¾Ð³Ð»Ð¾Ð³Ñ‡Ð¸Ð¹Ð½ Ñ†ÑƒÐ³Ð»ÑƒÑƒÐ»ÑÐ°Ð½ ÑÑÐ»Ð¶Ð½Ð¸Ð¹ Ð¾Ð½Ð¾Ð¾Ð³ Ð³Ð»Ð¾Ð±Ð°Ð»ÑŒ Ð¾Ð½Ð¾Ð¾Ð½ Ð´ÑÑÑ€ Ð½ÑŒ Ð½ÑÐ¼Ð¶ Ó©Ð³Ð½Ó©.
+
+  //   if (activePlayer === 0) {
+  //     scores[0] = scores[0] + roundScore;
+  //   } else {
+  //     scores[1] = scores[1] + roundScore;
+  //   }
+
+  scores[activePlayer] = scores[activePlayer] + roundScore;
+
+
+  document.getElementById("score-" + activePlayer).textContent =
+    scores[activePlayer];
+
+
+  if (scores[activePlayer] >= 20) {
+
+    document.getElementById("name-" + activePlayer).textContent = "Ялагч!!";
+    document
+      .querySelector(".player-" + activePlayer + "-panel")
+      .classList.add("winner");
+    document
+      .querySelector(".player-" + activePlayer + "-panel")
+      .classList.remove("active");
+  } else {
+
+    switchToNextPlayer();
+  }
+});
+
+
+function switchToNextPlayer() {
+
+  roundScore = 0;
+  document.getElementById("current-" + activePlayer).textContent = 0;
+
+  activePlayer === 0 ? (activePlayer = 1) : (activePlayer = 0);
+
+
+  document.querySelector(".player-0-panel").classList.toggle("active");
+  document.querySelector(".player-1-panel").classList.toggle("active");
+
+  // Ð¨Ð¾Ð¾Ð³ Ñ‚Ò¯Ñ€ Ð°Ð»Ð³Ð° Ð±Ð¾Ð»Ð³Ð¾Ð½Ð¾.
+  diceDom.style.display = "block";
+}
