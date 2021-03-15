@@ -42,7 +42,7 @@ document.querySelector(".btn-roll").addEventListener("click", function() {
 
 
 document.querySelector(".btn-hold").addEventListener("click", function() {
-  // Ð£Ð³ Ñ‚Ð¾Ð³Ð»Ð¾Ð³Ñ‡Ð¸Ð¹Ð½ Ñ†ÑƒÐ³Ð»ÑƒÑƒÐ»ÑÐ°Ð½ ÑÑÐ»Ð¶Ð½Ð¸Ð¹ Ð¾Ð½Ð¾Ð¾Ð³ Ð³Ð»Ð¾Ð±Ð°Ð»ÑŒ Ð¾Ð½Ð¾Ð¾Ð½ Ð´ÑÑÑ€ Ð½ÑŒ Ð½ÑÐ¼Ð¶ Ó©Ð³Ð½Ó©.
+
 
   //   if (activePlayer === 0) {
   //     scores[0] = scores[0] + roundScore;
@@ -87,3 +87,9 @@ function switchToNextPlayer() {
   // Ð¨Ð¾Ð¾Ð³ Ñ‚Ò¯Ñ€ Ð°Ð»Ð³Ð° Ð±Ð¾Ð»Ð³Ð¾Ð½Ð¾.
   diceDom.style.display = "block";
 }
+
+//shine togloom ehlvvleh
+document.querySelector('.btn-new').addEventListener('click', function()
+{
+alert
+});
